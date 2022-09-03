@@ -10,3 +10,9 @@ docker-compose up -d
 ```
 docker logs -f --tail=30 bsc_node
 ```
+
+### Stop bsc node
+```
+docker-compose down
+```
+
