@@ -1,0 +1,23 @@
+version: '3.7'                                
+services:                                   
+  bsc_node:                                      
+    container_name: bsc_node
+    build: .
+    restart: always
+    volumes:
+      - ./data:/root/.ethereum
+    ports:
+      - 127.0.0.1:8545:8545
+      - 127.0.0.1:8546:8546
+      - 127.0.0.1:6060:6060
+      - 30311:30311
+      - 30311:30311/udp
+    command: |
+      --syncmode snap
+      --cache 4096
+      --http --http.addr 0.0.0.0 --http.port 8545 --http.api "eth,net,web3,txpool,parlia" --http.corsdomain "*"
+      --ws  --ws.addr 0.0.0.0 --ws.api "net,web3," --ws.origins "*"
+#      --config /opt/config.toml
+#      --datadir /root/node
+#      --rpc.allow-unprotected-txs
+#      --txlookuplimit 0
