@@ -10,7 +10,12 @@ RUN wget -qO /bin/geth https://github.com/binance-chain/bsc/releases/download/${
     chmod +x /bin/geth
 
 RUN wget -qO config.zip https://github.com/binance-chain/bsc/releases/download/${VERSION}/mainnet.zip && \
-    unzip config.zip && rm -f config.zip
+    unzip config.zip && \
+    sed -i 's/^HTTPHost.*/HTTPHost = "0.0.0.0"/' config.toml && \
+    sed -i '/^WSPort.*/a WSHost = "0.0.0.0"' config.toml && \
+    sed -i 's/^HTTPVirtualHosts.*/HTTPVirtualHosts = ["*"]/' config.toml && \
+    sed -i '/Node\.LogConfig/,/^$/d' config.toml && \
+    rm -f config.zip
 
 RUN apt autoremove -y && rm -rf /var/lib/apt/lists/*
 

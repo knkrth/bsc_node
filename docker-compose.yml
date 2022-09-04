@@ -3,6 +3,7 @@ services:
   bsc_node:                                      
     container_name: bsc_node
     build: .
+    image: bsc_cli
     restart: always
     volumes:
       - ./data:/root/.ethereum
@@ -13,8 +14,10 @@ services:
       - 30311:30311
       - 30311:30311/udp
     command: |
+      --config /opt/config.toml
       --syncmode snap
       --cache 4096
+      --maxpeers 30
       --http --http.addr 0.0.0.0 --http.port 8545 --http.api "eth,net,web3,txpool,parlia" --http.corsdomain "*"
       --ws  --ws.addr 0.0.0.0 --ws.api "net,web3," --ws.origins "*"
 #      --config /opt/config.toml
